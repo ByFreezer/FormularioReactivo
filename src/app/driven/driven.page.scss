@@ -1,0 +1,32 @@
+// Mismo diseño responsive (mobile-first) que la página reactiva
+.contenedor {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+ion-list {
+  background: transparent;
+}
+
+ion-button ion-spinner {
+  height: 1.4em;
+}
+
+@media (min-width: 768px) {
+  .contenedor {
+    margin-top: 32px;
+    padding: 16px 24px 24px;
+    border: 1px solid var(--ion-color-step-150, rgba(0, 0, 0, 0.12));
+    border-radius: 16px;
+    background: var(--ion-item-background, var(--ion-background-color));
+  }
+}
+
+@media (max-width: 360px) {
+  ion-button {
+    --padding-start: 8px;
+    --padding-end: 8px;
+    font-size: 14px;
+  }
+}

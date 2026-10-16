@@ -1,0 +1,113 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-title>Template-driven</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/registro" aria-label="Ir al formulario reactivo">
+        <ion-icon slot="start" name="swap-horizontal-outline"></ion-icon>
+        Reactivo
+      </ion-button>
+      <ion-button
+        (click)="theme.toggle()"
+        [attr.aria-label]="theme.darkMode() ? 'Desactivar modo oscuro' : 'Activar modo oscuro'"
+      >
+        <ion-icon slot="icon-only" [name]="theme.darkMode() ? 'sunny' : 'moon'"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="contenedor">
+    <!-- #f="ngForm": referencia al formulario que Angular crea automáticamente -->
+    <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+      <ion-list lines="full">
+        <!-- Nombre: validaciones declaradas como atributos HTML -->
+        <ion-item>
+          <ion-input
+            name="nombre"
+            label="Nombre completo"
+            labelPlacement="floating"
+            type="text"
+            autocomplete="name"
+            [(ngModel)]="modelo.nombre"
+            #nombre="ngModel"
+            [required]="true"
+            [minlength]="3"
+            [errorText]="getError('nombre', nombre)"
+          ></ion-input>
+        </ion-item>
+
+        <!-- Email con teclado específico para móviles -->
+        <ion-item>
+          <ion-input
+            name="email"
+            label="Correo Electrónico"
+            labelPlacement="floating"
+            type="email"
+            inputmode="email"
+            autocomplete="email"
+            [(ngModel)]="modelo.email"
+            #email="ngModel"
+            [required]="true"
+            email
+            [errorText]="getError('email', email)"
+          ></ion-input>
+        </ion-item>
+
+        <!-- Contraseña -->
+        <ion-item>
+          <ion-input
+            name="password"
+            label="Contraseña"
+            labelPlacement="floating"
+            type="password"
+            autocomplete="new-password"
+            [(ngModel)]="modelo.password"
+            #password="ngModel"
+            [required]="true"
+            [pattern]="passwordPattern"
+            [errorText]="getError('password', password)"
+          ></ion-input>
+        </ion-item>
+
+        <!-- Fecha de nacimiento: [max] limita el selector; la directiva fechaNoFutura valida -->
+        <ion-item>
+          <ion-input
+            name="fechaNacimiento"
+            label="Fecha de nacimiento"
+            labelPlacement="stacked"
+            type="date"
+            [(ngModel)]="modelo.fechaNacimiento"
+            #fechaNacimiento="ngModel"
+            [required]="true"
+            [max]="maxFecha"
+            fechaNoFutura
+            [errorText]="getError('fechaNacimiento', fechaNacimiento)"
+          ></ion-input>
+        </ion-item>
+      </ion-list>
+
+      <div class="ion-padding-top">
+        <ion-button expand="block" type="submit" [disabled]="f.invalid || isSubmitting()">
+          @if (!isSubmitting()) {
+            <span>Registrarse</span>
+          } @else {
+            <ion-spinner name="crescent"></ion-spinner>
+          }
+        </ion-button>
+
+        <ion-button
+          expand="block"
+          fill="outline"
+          type="button"
+          class="ion-margin-top"
+          [disabled]="!datosEnviados()"
+          (click)="descargarPdf()"
+        >
+          <ion-icon slot="start" name="download-outline"></ion-icon>
+          Descargar datos en PDF
+        </ion-button>
+      </div>
+    </form>
+  </div>
+</ion-content>

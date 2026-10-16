@@ -1,0 +1,36 @@
+// Diseño responsive (RWD): enfoque mobile-first.
+// En móvil el formulario ocupa todo el ancho; en tablet/escritorio se centra
+// en una columna de lectura cómoda.
+.contenedor {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+ion-list {
+  background: transparent;
+}
+
+ion-button ion-spinner {
+  height: 1.4em;
+}
+
+// Tablet y superior: más aire y tarjeta con borde suave
+@media (min-width: 768px) {
+  .contenedor {
+    margin-top: 32px;
+    padding: 16px 24px 24px;
+    border: 1px solid var(--ion-color-step-150, rgba(0, 0, 0, 0.12));
+    border-radius: 16px;
+    background: var(--ion-item-background, var(--ion-background-color));
+  }
+}
+
+// Pantallas muy estrechas (≤ 360 px): botones y áreas táctiles cómodos
+@media (max-width: 360px) {
+  ion-button {
+    --padding-start: 8px;
+    --padding-end: 8px;
+    font-size: 14px;
+  }
+}

@@ -1,0 +1,97 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Registro de Usuario</ion-title>
+    <ion-buttons slot="end">
+      <ion-button
+        (click)="toggleDark()"
+        [attr.aria-label]="darkMode() ? 'Desactivar modo oscuro' : 'Activar modo oscuro'"
+      >
+        <ion-icon slot="icon-only" [name]="darkMode() ? 'sunny' : 'moon'"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- Enlace del FormGroup definido en TypeScript -->
+  <form [formGroup]="registroForm" (ngSubmit)="onSubmit()" novalidate>
+    <ion-list lines="full">
+      <!-- Nombre -->
+      <ion-item>
+        <ion-input
+          label="Nombre completo"
+          labelPlacement="floating"
+          type="text"
+          formControlName="nombre"
+          autocomplete="name"
+          [errorText]="getError('nombre')"
+        ></ion-input>
+      </ion-item>
+
+      <!-- Email con teclado específico para móviles -->
+      <ion-item>
+        <ion-input
+          label="Correo Electrónico"
+          labelPlacement="floating"
+          type="email"
+          inputmode="email"
+          formControlName="email"
+          autocomplete="email"
+          [errorText]="getError('email')"
+        ></ion-input>
+      </ion-item>
+
+      <!-- Contraseña -->
+      <ion-item>
+        <ion-input
+          label="Contraseña"
+          labelPlacement="floating"
+          type="password"
+          formControlName="password"
+          autocomplete="new-password"
+          [errorText]="getError('password')"
+        ></ion-input>
+      </ion-item>
+
+      <!-- Fecha de nacimiento (no puede ser posterior a hoy) -->
+      <ion-item>
+        <ion-input
+          label="Fecha de nacimiento"
+          labelPlacement="stacked"
+          type="date"
+          formControlName="fechaNacimiento"
+          [max]="maxFecha"
+          [errorText]="getError('fechaNacimiento')"
+        ></ion-input>
+      </ion-item>
+    </ion-list>
+
+    <div class="ion-padding-top">
+      <!-- Botón dinámico que responde al Signal -->
+      <ion-button
+        expand="block"
+        type="submit"
+        [disabled]="registroForm.invalid || isSubmitting()"
+      >
+        @if (!isSubmitting()) {
+          <span>Registrarse</span>
+        } @else {
+          <ion-spinner name="crescent"></ion-spinner>
+        }
+      </ion-button>
+
+      <!-- Descarga en PDF de los datos del último envío -->
+      <ion-button
+        expand="block"
+        fill="outline"
+        type="button"
+        class="ion-margin-top"
+        [disabled]="!datosEnviados()"
+        (click)="descargarPdf()"
+      >
+        <ion-icon slot="start" name="download-outline"></ion-icon>
+        Descargar datos en PDF
+      </ion-button>
+    </div>
+  </form>
+</ion-content>
